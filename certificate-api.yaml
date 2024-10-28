@@ -1,0 +1,31 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: api-certs-letsencrypt
+  namespace: openshift-config
+  labels:
+    app: cert-manager
+spec:
+  secretName: api-certs-letsencrypt
+  secretTemplate:
+    labels:
+      app: cert-manager
+  duration: 2160h # 90d
+  renewBefore: 720h # 30d
+  subject:
+    organizations:
+      - Org Name
+  commonName: 'api.salamander.aimlworkbench.com'
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 2048
+    rotationPolicy: Always
+  usages:
+    - server auth
+    - client auth
+  dnsNames:
+    - 'api.salamander.aimlworkbench.com'
+  issuerRef:
+    name: letsencrypt-cluster-issuer
+    kind: ClusterIssuer
