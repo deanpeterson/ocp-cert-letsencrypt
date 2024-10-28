@@ -1,0 +1,4 @@
+oc patch ingresscontroller default -n openshift-ingress-operator --type=merge \
+--patch='{"spec": { "defaultCertificate": { "name": "router-certs-letsencrypt" }}}'
+
+oc patch apiserver cluster --type merge --patch="{\"spec\": {\"servingCerts\": {\"namedCertificates\": [ { \"names\": [  \"api.salamander.aimlworkbench.com\"  ], \"servingCertificate\": {\"name\": \"api-certs-letsencrypt\" }}]}}}"
